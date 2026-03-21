@@ -1,0 +1,28 @@
+{
+  "role_weights": {
+    "privilege_escalation": 50,
+    "resource_control_broad": 35,
+    "resource_control_narrow": 20,
+    "data_access": 40,
+    "security_visibility": 15,
+    "read_only": 5,
+    "custom_or_unknown": 25
+  },
+  "scope_weights": {
+    "subscription": 25,
+    "resource_group": 15,
+    "resource": 5
+  },
+  "principal_modifiers": {
+    "ServicePrincipal": 10,
+    "ManagedIdentity": 10,
+    "Group": 5,
+    "User": 0,
+    "Unknown": 0
+  },
+  "severity_thresholds": {
+    "critical": 80,
+    "high": 60,
+    "medium": 40
+  }
+}
