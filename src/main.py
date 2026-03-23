@@ -347,10 +347,10 @@ def main() -> None:
     all_records = []
     all_taxonomies = {}
     all_actions = {}
-    # Build role to subscriptions mapping
     role_subscriptions = {}
     sub_id_to_name = {sub['id']: sub['name'] for sub in selected_subs}
 
+    # Now all_records is fully populated — build role_subscriptions here
     for record in all_records:
         if record.role_name not in role_subscriptions:
             role_subscriptions[record.role_name] = set()
