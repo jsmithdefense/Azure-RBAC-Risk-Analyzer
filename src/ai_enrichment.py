@@ -13,25 +13,46 @@ Given principal-level RBAC data, produce two sections exactly in this format:
 Capability Summary:
 - bullet
 - bullet
-- bullet
 
 Recommended Actions:
-1. step
-2. step
-3. step
 
-Requirements:
-- Capability Summary must contain 3-5 plain English bullets explaining what the principal can actually do across the environment.
+1. [CRITICAL | Effort: Low] Action Title
+
+   Why
+   One sentence explaining the risk
+
+   Steps
+     1. Step
+     2. Step
+     3. Step
+
+   Validation
+   One sentence confirming success
+
+2. [HIGH | Effort: Medium] Action Title
+...
+
+Requirements — Capability Summary:
+- Include 3-5 plain English bullets explaining what the principal can actually do across the environment.
 - Focus on operational impact and realistic abuse potential, not just repeating role names.
-- Recommended Actions must contain 3-5 numbered, specific, Azure-native remediation steps tied directly to the findings in the Capability Summary.
-- Reference specific roles, scopes, and principal types provided in the input context.
-- Prefer Azure-native controls where appropriate, such as:
-  - converting permanent assignments to Microsoft Entra PIM eligible roles
-  - narrowing role scope from resource group to specific resource
-  - removing privileged roles from broad groups and assigning to dedicated admin groups
-  - implementing just-in-time access
-- Keep all items concise, specific, and actionable; avoid generic security advice.
-- Return only the two sections above with no additional preamble."""
+
+Requirements — Recommended Actions:
+- Include 3-5 recommended actions per principal, ordered by priority: all CRITICAL first, then HIGH, then MEDIUM, then LOW.
+- Each action title stands alone on its own line formatted exactly as: an opening bracket, PRIORITY, space, pipe, space, Effort:, space, EFFORT_LEVEL, closing bracket, space, Action Title (e.g. [CRITICAL | Effort: Low] Action Title). Do not number the actions.
+- PRIORITY must be exactly one of: CRITICAL, HIGH, MEDIUM, LOW — based on severity of the risk being addressed.
+- EFFORT_LEVEL must be exactly one of: Low, Medium, High — based on how complex the remediation is to execute.
+- After a blank line, include the subheading Why alone on its own line in bold, indented with three spaces, then a blank line, then one sentence explaining the specific risk (indented consistently with Why).
+- After a blank line, include the subheading Steps alone on its own line in bold, (same indentation as Why), then a blank line, then numbered steps 1. 2. 3. (use more numbers if needed), each indented with five spaces so they nest under Steps.
+- After a blank line, include the subheading Validation alone on its own line in bold, (same indentation as Why), then a blank line, then one sentence describing a concrete, verifiable check.
+
+Content rules for Recommended Actions:
+- Why must tie directly to the Capability Summary or assignment risks.
+- Steps must be specific and Azure-native: exact portal paths (e.g. Subscription > Access control (IAM)), Azure CLI commands, or Microsoft Entra PIM / Privileged Identity Management workflows where appropriate.
+- Steps must reference specific role names, resource groups or scope display names, subscription names, and principal names from the input context.
+- Validation must be verifiable (e.g. IAM no longer lists the assignment, PIM state, or expected az role assignment list outcome) — not generic advice.
+- Prefer Azure-native fixes: PIM eligible assignments, narrower scope, dedicated admin groups, just-in-time access where appropriate.
+- Keep each action concise but complete; separate actions with a blank line.
+- Return only the two sections above with no preamble or closing commentary."""
 
 MODEL_CATALOG = {
     "1": {
