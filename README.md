@@ -1,9 +1,9 @@
 # Azure RBAC Risk Analyzer
 
-> *"Students can actively manage Microsoft Sentinel incidents and alerts in 
-> Cyber-Range-Admin-SOC — including dismissing, closing, or modifying incident 
-> status — actions that could suppress legitimate detections or obscure attacker 
-> activity during exercises."*
+> *"The analysts group can actively manage Microsoft Sentinel incidents and alerts 
+> in the production SOC resource group — including dismissing, closing, or modifying 
+> incident status — actions that could suppress legitimate detections or obscure 
+> attacker activity."*
 >
 > — AI-generated capability summary produced by this tool against a live Azure environment
 
@@ -97,39 +97,39 @@ executed via the Azure SDK, and validated.
 
 ### Principal Risk Analysis
 ```
-Name = students (2437 members) | Type = Group | Severity = Critical | Score = 475
-  - Medium | 55 | Microsoft Sentinel Responder | resource_control_broad | Cyber-Range-Admin-SOC
-  - Medium | 40 | Alert Rules Admin            | resource_control_narrow | Cyber-Range-Admin-SOC  
-  - Medium | 40 | Student NSG User             | resource_control_narrow | Cyber-Range-NSGs
-  - Low    | 30 | Student Subnet Joiner        | resource_control_narrow | Cyber-Range-VNet
+Name = analysts (500 members) | Type = Group | Severity = Critical | Score = 475
+  - Medium | 55 | Microsoft Sentinel Responder | resource_control_broad | production-soc-rg
+  - Medium | 40 | Alert Rules Admin            | resource_control_narrow | production-soc-rg
+  - Medium | 40 | Student NSG User             | resource_control_narrow | network-controls-rg
+  - Low    | 30 | Student Subnet Joiner        | resource_control_narrow | core-vnet
 ```
 
 ### AI Capability Summary
 ```
-- Students can create, modify, and delete Sentinel alert rules via the Alert Rules 
-  Admin role — meaning they could disable or weaken detection logic within the SOC 
-  workspace, directly undermining the integrity of monitoring.
+- The analysts group can create, modify, and delete Sentinel alert rules via the 
+  Alert Rules Admin role — meaning they could disable or weaken detection logic 
+  within the SOC workspace, directly undermining the integrity of monitoring.
 
 - The combination of alert rule write access and Sentinel Responder permissions 
-  creates a realistic defense evasion path: students could disable detections, 
+  creates a realistic defense evasion path: group members could disable detections, 
   suppress active incidents, and cover their tracks — all within their assigned roles.
 ```
 
 ### Remediation Playbook
 ```
-[CRITICAL | Effort: Low] Remove Alert Rules Admin from students group
+[CRITICAL | Effort: Low] Remove Alert Rules Admin from analysts group
 
 Why
-Students with write access to Sentinel analytics rules can disable detections
-that instructors depend on to monitor the range.
+Group members with write access to Sentinel analytics rules can disable detections
+that the SOC depends on to monitor the environment.
 
 Steps
-  1. Navigate to Azure Portal → Cyber-Range-Admin-SOC → Access control (IAM)
-  2. Filter Role assignments by the students group
+  1. Navigate to Azure Portal → production-soc-rg → Access control (IAM)
+  2. Filter Role assignments by the analysts group
   3. Locate Alert Rules Admin → Remove → Confirm
 
 Validation
-az role assignment list --assignee <group-id> --resource-group Cyber-Range-Admin-SOC
+az role assignment list --assignee <group-id> --resource-group production-soc-rg
 Confirm no Alert Rules Admin entry is returned.
 ```
 
@@ -137,7 +137,7 @@ Confirm no Alert Rules Admin entry is returned.
 ```
 REMEDIATION ENGINE
 ============================================================
-  Principal: students (Group)
+  Principal: analysts (Group)
     1. [CRITICAL | Effort: Low]    Remove Alert Rules Admin       (remove_role_assignment)
     2. [CRITICAL | Effort: Medium] Convert Sentinel Responder     (convert_to_pim_eligible)
     3. [HIGH     | Effort: Low]    Remove Student NSG User        (remove_role_assignment)
