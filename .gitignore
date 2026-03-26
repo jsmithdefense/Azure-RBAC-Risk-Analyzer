@@ -6,3 +6,4 @@ lab/terraform/*.tfstate.*
 lab/terraform/.terraform.lock.hcl
 reports/
 .claude/
+__pycache__/
