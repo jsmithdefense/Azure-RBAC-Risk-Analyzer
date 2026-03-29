@@ -2,7 +2,7 @@
 
 **Enumerate, score, and remediate overprivileged identities across your Azure tenant.**
 
-No third-party platforms. No agents. No connectors. Just the Azure SDK and the Anthropic API running against your control plane. Understand your enviorment with AI-enriched summaries, custom remediation playbooks, and autonomous remediation execution.
+No third-party platforms. No agents. No connectors. Just the Azure SDK and the Anthropic API running against your control plane. 
 
 ---
 Sample Finding:
@@ -261,4 +261,3 @@ Azure-RBAC-Risk-Analyzer/
 - [ ] Privilege escalation path detection
 
 ---
-
